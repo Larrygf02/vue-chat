@@ -4,9 +4,9 @@
         <v-card class="mx-auto" max-width="344" outlined>
             <v-list :dense="dense" :disabled="true">
                 <v-list-item-group v-model="item" color="primary">
-                    <v-list-item v-for="(item, i) in items" :key="i">
+                    <v-list-item v-for="(message, i) in messages" :key="i">
                         <v-list-item-content>
-                            <v-list-item-title v-html="item.title"></v-list-item-title>
+                            <v-list-item-title v-html="message.title"></v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list-item-group>
@@ -16,7 +16,7 @@
                 <v-form ref="form">
                     <v-text-field
                         outlined
-                        v-model="text"
+                        v-model="message"
                         label="Escribir su mensaje aquí"></v-text-field>
                     <v-btn text>Enviar mensaje</v-btn>
                 </v-form>
@@ -25,15 +25,25 @@
     </v-container>
 </template>
 <script>
+import io from 'socket.io-client'
+const socket = io('http://localhost:3000/')
 export default {
     data() {
         return {
             item: 5,
-            items: [
-                {
-                    title: 'Hola'
-                }
-            ]
+            message: '',
+            messages: []
+        }
+    },
+    created() {
+        socket.on("chat message", msg => {
+            this.messages.push({ title: msg })
+        })
+    },
+    methods: {
+        sendMessage() {
+            socket.emit('chat message', this.message)
+            this.message = ''
         }
     }
 }
