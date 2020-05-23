@@ -2,7 +2,7 @@
     <v-container>
         <h1>Chat</h1>
         <v-card class="mx-auto" max-width="344" outlined>
-            <v-list :dense="dense" :disabled="true">
+            <v-list :disabled="true">
                 <v-list-item-group v-model="item" color="primary">
                     <v-list-item v-for="(message, i) in messages" :key="i">
                         <v-list-item-content>
@@ -18,7 +18,7 @@
                         outlined
                         v-model="message"
                         label="Escribir su mensaje aquí"></v-text-field>
-                    <v-btn text>Enviar mensaje</v-btn>
+                    <v-btn @click.prevent="sendMessage" text>Enviar mensaje</v-btn>
                 </v-form>
             </v-card-actions>
         </v-card>
@@ -26,6 +26,7 @@
 </template>
 <script>
 import io from 'socket.io-client'
+// URL ngrok
 const socket = io('http://localhost:3000/')
 export default {
     data() {
