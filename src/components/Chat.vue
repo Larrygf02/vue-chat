@@ -11,6 +11,16 @@
                     </v-list-item>
                 </v-list-item-group>
             </v-list>
+            <v-divider></v-divider>
+            <v-card-actions class="text-center">
+                <v-form ref="form">
+                    <v-text-field
+                        outlined
+                        v-model="text"
+                        label="Escribir su mensaje aquí"></v-text-field>
+                    <v-btn text>Enviar mensaje</v-btn>
+                </v-form>
+            </v-card-actions>
         </v-card>
     </v-container>
 </template>
