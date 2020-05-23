@@ -7,3 +7,9 @@ const routes = [
     { path: '/chat', component: Chat }
 ]
 
+const router = new Router({
+    mode: 'history',
+    routes
+})
+
+export default router;
